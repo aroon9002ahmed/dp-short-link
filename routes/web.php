@@ -7,6 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Short link redirection (keep this as the last route)
 Route::get('/{shortCode}', [ShortLinkController::class, 'redirect'])
     ->name('short-link.redirect')
