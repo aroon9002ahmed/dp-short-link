@@ -1,38 +1,36 @@
 <?php
 
-namespace App\Filament\Resources\Links\Tables;
+namespace App\Filament\Widgets;
 
-use App\Filament\Exports\LinkExporter;
+use App\Filament\Resources\Links\LinkResource;
+use App\Models\Link;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Widgets\TableWidget;
+use Illuminate\Database\Eloquent\Builder;
 
-class LinksTable
+class LinkWidget extends TableWidget
 {
-    public static function configure(Table $table): Table
+    protected static ?string $title = 'Links list';
+
+    public function table(Table $table): Table
     {
         return $table
+            ->query(fn(): Builder => Link::query())
+            ->heading('Links list')
             ->columns([
                 TextColumn::make('short_code')
+                    ->label('Short Code')
                     ->searchable(),
                 TextColumn::make('clicks')
-                    ->numeric()
-                    ->sortable(),
-                IconColumn::make('is_active')
-                    ->boolean(),
-                TextColumn::make('expires_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Click Count')
+                    ->searchable(),
                 TextColumn::make('creator.name')
                     ->label('Created by')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -46,18 +44,21 @@ class LinksTable
                 //
             ])
             ->headerActions([
-                ExportAction::make()
-                    ->exporter(LinkExporter::class)
+                Action::make('new_link')
+                    ->url(LinkResource::getUrl('create'))
+                    ->label('Create New Link')
+                    ->color('primary')
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                ViewAction::make()
+                    ->url(fn(Link $record): string => LinkResource::getUrl('view', ['record' => $record])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    //
                 ]),
             ]);
     }
+
+    protected int|string|array $columnSpan = 'full';
 }
