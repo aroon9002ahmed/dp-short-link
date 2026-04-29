@@ -19,6 +19,10 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('roles.name')
+                    ->badge()
+                    ->label('Roles')
+                    ->searchable(),
                 TextColumn::make('last_visit_at')
                     ->dateTime()
                     ->sortable()

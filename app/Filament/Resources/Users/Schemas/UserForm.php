@@ -29,6 +29,11 @@ class UserForm
                     ->password()
                     ->requiredWith('password')
                     ->dehydrated(false),
+                \Filament\Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 }
