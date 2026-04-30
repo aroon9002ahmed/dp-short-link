@@ -8,6 +8,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
 class LinkForm
@@ -36,13 +37,13 @@ class LinkForm
                 Placeholder::make('original_url_display')
                     ->label('Original URL')
                     ->content(fn($record) => $record?->original_url)
-                    ->columnSpanFull()
+                    // ->columnSpanFull()
                     ->visibleOn('edit'),
                 Textarea::make('original_url')
                     ->label('Original URL')
                     ->required()
-                    ->rows(3)
-                    ->columnSpanFull()
+                    // ->rows(3)
+                    // ->columnSpanFull()
                     ->hiddenOn('edit')
                     ->rules([
                         new class implements \Illuminate\Contracts\Validation\ValidationRule {
@@ -79,17 +80,20 @@ class LinkForm
                             }
                         },
                     ]),
-                TextInput::make('clicks')
-                    ->label('Clicks')
-                    ->numeric()
-                    ->disabled()
-                    ->dehydrated(false)
-                    ->default(0)
-                    ->hiddenOn('edit'),
+                DateTimePicker::make('expires_at'),
                 Toggle::make('is_active')
                     ->label('Is Active')
+                    ->default(true)
                     ->required(),
-                DateTimePicker::make('expires_at'),
+                TextEntry::make('creator.name')
+                    ->label('Created By')
+                    ->default('Admin')
+                    ->hiddenOn('create'),
+                TextEntry::make('clicks')
+                    ->label('Clicks')
+                    ->default(0)
+                    ->hiddenOn('create'),
+
             ]);
     }
 }
