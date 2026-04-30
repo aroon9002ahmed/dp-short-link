@@ -17,5 +17,9 @@ class UserSeeder extends Seeder
             'email' => 'developer@dubaiphone.net',
             'password' => bcrypt('password'),
         ]);
+
+        //give this user a super_admin role
+        $user = \App\Models\User::where('email', 'developer@dubaiphone.net')->first();
+        $user->assignRole('super_admin');
     }
 }
