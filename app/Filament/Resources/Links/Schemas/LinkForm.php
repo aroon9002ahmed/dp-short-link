@@ -42,15 +42,14 @@ class LinkForm
                 Placeholder::make('original_url_display')
                     ->label('Original URL')
                     ->content(fn($record) => $record?->original_url)
-                    // ->columnSpanFull()
                     ->visibleOn('edit'),
                 Textarea::make('original_url')
                     ->label('Original URL')
                     ->required()
-                    // ->rows(3)
-                    // ->columnSpanFull()
                     ->hiddenOn('edit')
                     ->rules([
+                        'url',
+                        'active_url',
                         new class implements \Illuminate\Contracts\Validation\ValidationRule {
                             public function validate(string $attribute, mixed $value, \Closure $fail): void
                             {
