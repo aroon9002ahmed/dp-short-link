@@ -34,6 +34,11 @@ class LinkForm
                                 \$tooltip('Copied!', { theme: \$store.theme, timeout: 2000 });
                             ")
                     ),
+                TextInput::make('title')
+                    ->label('Title')
+                    ->helperText('Add description for the link')
+                    ->maxLength(255)
+                    ->autofocus(),
                 Placeholder::make('original_url_display')
                     ->label('Original URL')
                     ->content(fn($record) => $record?->original_url)

@@ -18,8 +18,10 @@ class LinkExporter extends Exporter
         return [
             ExportColumn::make('id')
                 ->label('ID'),
+            ExportColumn::make('title')
+                ->default('-'),
             ExportColumn::make('short_code')
-                ->formatStateUsing(fn ($state) => url($state)),
+                ->formatStateUsing(fn($state) => url($state)),
             ExportColumn::make('original_url'),
             ExportColumn::make('clicks'),
             ExportColumn::make('is_active'),

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class Link extends Model
 {
     protected $fillable = [
+        'title',
         'short_code',
         'original_url',
         'clicks',

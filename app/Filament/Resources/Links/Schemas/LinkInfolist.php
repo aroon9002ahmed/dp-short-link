@@ -36,6 +36,9 @@ class LinkInfolist
                                 )
                         ),
                 ]),
+                TextEntry::make('title')
+                    ->label('Title')
+                    ->default('-'),
                 TextEntry::make('original_url')
                     ->columnSpanFull(),
                 TextEntry::make('clicks')

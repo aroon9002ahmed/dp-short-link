@@ -19,6 +19,9 @@ class LinksTable
     {
         return $table
             ->columns([
+                TextColumn::make('title')
+                    ->searchable()
+                    ->default('-'),
                 TextColumn::make('short_code')
                     ->searchable(),
                 TextColumn::make('clicks')
@@ -58,6 +61,7 @@ class LinksTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', direction: 'desc');
     }
 }
