@@ -22,6 +22,10 @@ class LinkWidget extends TableWidget
             ->query(fn(): Builder => Link::query())
             ->heading('Links list')
             ->columns([
+                TextColumn::make('title')
+                    ->label('Title')
+                    ->searchable()
+                    ->default('-'),
                 TextColumn::make('short_code')
                     ->label('Short Code')
                     ->searchable(),
@@ -57,7 +61,8 @@ class LinkWidget extends TableWidget
                 BulkActionGroup::make([
                     //
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', direction: 'desc');
     }
 
     protected int|string|array $columnSpan = 'full';
