@@ -41,6 +41,20 @@ class LinkInfolist
                     ->default('-'),
                 TextEntry::make('original_url')
                     ->columnSpanFull(),
+                TextEntry::make('qr_code')
+                    ->label('QR Code')
+                    ->html()
+                    ->default('qr')
+                    ->formatStateUsing(function ($state, $record) {
+                        return \LaraZeus\Qr\Facades\Qr::render(
+                            data: url(env('APP_URL') . '/' . $record->short_code),
+                            options: array_merge(
+                                $record->qr_options ?? \LaraZeus\Qr\Facades\Qr::getDefaultOptions(),
+                                ['type' => 'svg']
+                            )
+                        );
+                    })
+                    ->columnSpanFull(),
                 TextEntry::make('clicks')
                     ->numeric(),
                 IconEntry::make('is_active')
