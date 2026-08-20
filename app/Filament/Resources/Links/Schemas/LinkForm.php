@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Links\Schemas;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -39,14 +38,9 @@ class LinkForm
                     ->helperText('Add description for the link')
                     ->maxLength(255)
                     ->autofocus(),
-                Placeholder::make('original_url_display')
-                    ->label('Original URL')
-                    ->content(fn($record) => $record?->original_url)
-                    ->visibleOn('edit'),
                 Textarea::make('original_url')
                     ->label('Original URL')
                     ->required()
-                    ->hiddenOn('edit')
                     ->rules([
                         'url',
                         'active_url',
